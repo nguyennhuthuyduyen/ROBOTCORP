@@ -81,11 +81,10 @@ Take a screenshot of the robot
     
 Embed the robot screenshot to the receipt PDF file
     [Arguments]        ${screenshot}    ${pdf}
-    ${file}=   Create List
-    Append To List      ${file}    ${screenshot}   ${pdf}
-    Open Pdf     ${pdf}
-    Add Files To Pdf    ${file}     ${pdf}
-    Close Pdf  ${pdf}
+    Add Watermark Image To PDF
+    ...             image_path=${screenshot}
+    ...             source_path=${pdf}
+    ...             output_path=${pdf}
     
 Create a ZIP file of the receipts
     Archive Folder With Zip    ${CURDIR}${/}output${/}receipts    receipts.zip
