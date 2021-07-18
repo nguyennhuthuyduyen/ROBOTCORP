@@ -82,7 +82,7 @@ Take a screenshot of the robot
 Embed the robot screenshot to the receipt PDF file
     [Arguments]        ${screenshot}    ${pdf}
     ${file}=   Create List
-    Append To List      ${file}   ${pdf}    ${screenshot}
+    Append To List      ${file}    ${screenshot}   ${pdf}
     Open Pdf     ${pdf}
     Add Files To Pdf    ${file}     ${pdf}
     Close Pdf  ${pdf}
