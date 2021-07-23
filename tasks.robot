@@ -9,6 +9,8 @@ Library   Collections
 Library   RPA.PDF
 Library   RPA.Archive
 Library   RPA.FileSystem
+Library   RPA.Dialogs
+Library   RPA.Robocloud.Secrets
 
 
 *** Variables ***
@@ -20,10 +22,21 @@ ${robot_image}      //div[contains(@id, 'robot-preview-image')]
 # +
 *** Keywords ***
 Open the robot order website
-    Open Available Browser    https://robotsparebinindustries.com/#/robot-order
+    ${url}=    Get Secret    credentials
+    Log        ${url}
+    Open Available Browser      ${url}[robotsparebin]
+    #Open Available Browser    https://robotsparebinindustries.com/#/robot-order
+
+Get orders URL from User
+    Create Form    Orders.csv URL
+    Add Text Input    URL    url
+    &{response}    Request Response
+    [Return]    ${response["url"]}
 
 Get orders
-    Download    https://robotsparebinindustries.com/orders.csv    overwrite=True
+    ${CSV_FILE_URL}=    Get orders URL from User
+    Download        ${CSV_FILE_URL}           overwrite=True
+    #Download    https://robotsparebinindustries.com/orders.csv    overwrite=True
     ${orders}=  Read Table From Csv    orders.csv   header=True
     [Return]  ${orders}
 
